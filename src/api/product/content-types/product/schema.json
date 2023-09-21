@@ -78,6 +78,11 @@
       "relation": "manyToMany",
       "target": "api::purchase.purchase",
       "mappedBy": "products"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
     }
   }
 }
