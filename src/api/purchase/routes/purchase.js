@@ -9,7 +9,7 @@ const { createCoreRouter } = require("@strapi/strapi").factories;
 module.exports = createCoreRouter("api::purchase.purchase", {
   config: {
     create: {
-      middlewares: ["api::purchase.create-purchase-request"],
+      middlewares: ["api::purchase.create-purchase-request","api::purchase.remove-purchaseitems-from-cart"],
     },
   },
 });

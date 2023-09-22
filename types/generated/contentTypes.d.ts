@@ -361,203 +361,6 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiCartCart extends Schema.CollectionType {
-  collectionName: 'carts';
-  info: {
-    singularName: 'cart';
-    pluralName: 'carts';
-    displayName: 'Cart';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    name: Attribute.String &
-      Attribute.Required &
-      Attribute.Unique &
-      Attribute.SetMinMaxLength<{
-        minLength: 4;
-      }>;
-    products: Attribute.JSON & Attribute.Required;
-    user: Attribute.Relation<
-      'api::cart.cart',
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<'api::cart.cart', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<'api::cart.cart', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-  };
-}
-
-export interface ApiProductProduct extends Schema.CollectionType {
-  collectionName: 'products';
-  info: {
-    singularName: 'product';
-    pluralName: 'products';
-    displayName: 'Product';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    name: Attribute.String &
-      Attribute.Required &
-      Attribute.SetMinMaxLength<{
-        minLength: 3;
-      }>;
-    description: Attribute.Text &
-      Attribute.SetMinMaxLength<{
-        minLength: 3;
-      }>;
-    category: Attribute.Enumeration<
-      [
-        'Electronics + Appliances',
-        'Books',
-        'Sports',
-        'Fashion',
-        'Computer + Accessories',
-        'Furniture + Decor'
-      ]
-    > &
-      Attribute.Required;
-    color: Attribute.Enumeration<
-      ['Red', 'Blue', 'Green', 'Yellow', 'Black', 'Purple', 'Brown', 'Orange']
-    >;
-    quantity: Attribute.Integer & Attribute.Required;
-    image: Attribute.Media & Attribute.Required;
-    size: Attribute.String &
-      Attribute.SetMinMaxLength<{
-        minLength: 2;
-      }>;
-    price: Attribute.BigInteger & Attribute.Required & Attribute.DefaultTo<'0'>;
-    user: Attribute.Relation<
-      'api::product.product',
-      'manyToOne',
-      'plugin::users-permissions.user'
-    >;
-    slug: Attribute.UID<'api::product.product', 'name'> &
-      Attribute.Required &
-      Attribute.SetMinMaxLength<{
-        minLength: 3;
-      }>;
-    reviews: Attribute.Relation<
-      'api::product.product',
-      'oneToMany',
-      'api::review.review'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::product.product',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::product.product',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiPurchasePurchase extends Schema.CollectionType {
-  collectionName: 'purchases';
-  info: {
-    singularName: 'purchase';
-    pluralName: 'purchases';
-    displayName: 'Purchase';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    address: Attribute.Text &
-      Attribute.Required &
-      Attribute.SetMinMaxLength<{
-        minLength: 15;
-      }>;
-    products: Attribute.JSON & Attribute.Required;
-    status: Attribute.Enumeration<['Placed', 'Processing', 'Finished']>;
-    totalprice: Attribute.BigInteger & Attribute.Required;
-    purchaseid: Attribute.UID & Attribute.Required;
-    user: Attribute.Relation<
-      'api::purchase.purchase',
-      'manyToOne',
-      'plugin::users-permissions.user'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::purchase.purchase',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::purchase.purchase',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiReviewReview extends Schema.CollectionType {
-  collectionName: 'reviews';
-  info: {
-    singularName: 'review';
-    pluralName: 'reviews';
-    displayName: 'Review';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    reviewtitle: Attribute.Text & Attribute.Required;
-    reviewdescription: Attribute.Text & Attribute.Required;
-    reviewrating: Attribute.Decimal & Attribute.Required;
-    reviewpics: Attribute.Media;
-    product: Attribute.Relation<
-      'api::review.review',
-      'manyToOne',
-      'api::product.product'
-    >;
-    user: Attribute.Relation<
-      'api::review.review',
-      'manyToOne',
-      'plugin::users-permissions.user'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::review.review',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::review.review',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -894,6 +697,208 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
+export interface ApiCartCart extends Schema.CollectionType {
+  collectionName: 'carts';
+  info: {
+    singularName: 'cart';
+    pluralName: 'carts';
+    displayName: 'Cart';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.Required &
+      Attribute.Unique &
+      Attribute.SetMinMaxLength<{
+        minLength: 4;
+      }>;
+    products: Attribute.JSON & Attribute.Required;
+    user: Attribute.Relation<
+      'api::cart.cart',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::cart.cart', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::cart.cart', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiProductProduct extends Schema.CollectionType {
+  collectionName: 'products';
+  info: {
+    singularName: 'product';
+    pluralName: 'products';
+    displayName: 'Product';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        minLength: 3;
+      }>;
+    description: Attribute.Text &
+      Attribute.SetMinMaxLength<{
+        minLength: 3;
+      }>;
+    category: Attribute.Enumeration<
+      [
+        'Electronics + Appliances',
+        'Books',
+        'Sports',
+        'Fashion',
+        'Computer + Accessories',
+        'Furniture + Decor'
+      ]
+    > &
+      Attribute.Required;
+    color: Attribute.Enumeration<
+      ['Red', 'Blue', 'Green', 'Yellow', 'Black', 'Purple', 'Brown', 'Orange']
+    >;
+    quantity: Attribute.Integer & Attribute.Required;
+    image: Attribute.Media & Attribute.Required;
+    size: Attribute.String &
+      Attribute.SetMinMaxLength<{
+        minLength: 2;
+      }>;
+    price: Attribute.BigInteger & Attribute.Required & Attribute.DefaultTo<'0'>;
+    user: Attribute.Relation<
+      'api::product.product',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    slug: Attribute.UID<'api::product.product', 'name'> &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        minLength: 3;
+      }>;
+    reviews: Attribute.Relation<
+      'api::product.product',
+      'oneToMany',
+      'api::review.review'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::product.product',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::product.product',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPurchasePurchase extends Schema.CollectionType {
+  collectionName: 'purchases';
+  info: {
+    singularName: 'purchase';
+    pluralName: 'purchases';
+    displayName: 'Purchase';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    address: Attribute.Text &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        minLength: 15;
+      }>;
+    products: Attribute.JSON & Attribute.Required;
+    status: Attribute.Enumeration<['Placed', 'Processing', 'Finished']>;
+    totalprice: Attribute.BigInteger & Attribute.Required;
+    purchaseid: Attribute.UID & Attribute.Required;
+    user: Attribute.Relation<
+      'api::purchase.purchase',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::purchase.purchase',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::purchase.purchase',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiReviewReview extends Schema.CollectionType {
+  collectionName: 'reviews';
+  info: {
+    singularName: 'review';
+    pluralName: 'reviews';
+    displayName: 'Review';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.Text & Attribute.Required;
+    description: Attribute.Text & Attribute.Required;
+    rating: Attribute.Decimal &
+      Attribute.Required &
+      Attribute.SetMinMax<{
+        min: 1;
+        max: 5;
+      }>;
+    images: Attribute.Media;
+    product: Attribute.Relation<
+      'api::review.review',
+      'manyToOne',
+      'api::product.product'
+    >;
+    user: Attribute.Relation<
+      'api::review.review',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::review.review',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::review.review',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Shared {
     export interface ContentTypes {
@@ -904,16 +909,16 @@ declare module '@strapi/strapi' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::cart.cart': ApiCartCart;
-      'api::product.product': ApiProductProduct;
-      'api::purchase.purchase': ApiPurchasePurchase;
-      'api::review.review': ApiReviewReview;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::i18n.locale': PluginI18NLocale;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::cart.cart': ApiCartCart;
+      'api::product.product': ApiProductProduct;
+      'api::purchase.purchase': ApiPurchasePurchase;
+      'api::review.review': ApiReviewReview;
     }
   }
 }

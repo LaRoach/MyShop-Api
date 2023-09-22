@@ -12,25 +12,28 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "reviewtitle": {
+    "title": {
       "type": "text",
       "required": true
     },
-    "reviewdescription": {
+    "description": {
       "type": "text",
       "required": true
     },
-    "reviewrating": {
+    "rating": {
       "type": "decimal",
-      "required": true
+      "required": true,
+      "max": 5,
+      "min": 1
     },
-    "reviewpics": {
+    "images": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "videos"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
     },
     "product": {
       "type": "relation",
