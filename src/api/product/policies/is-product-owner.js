@@ -18,7 +18,7 @@ module.exports = async (policyContext, config, { strapi }) => {
     "api::product.product",
     productId,
     {
-      populate: { users_permissions_user: true },
+      populate: { user: true },
     }
   );
   // Check if the product exists
@@ -26,7 +26,7 @@ module.exports = async (policyContext, config, { strapi }) => {
     throw new NotFoundError("Product not found.");
   }
   // Check if the authenticated user is the owner of the product
-  if (product.users_permissions_user.id !== policyContext.state.user.id) {
+  if (product.user.id !== policyContext.state.user.id) {
     throw new ForbiddenError("You are not the owner of this product.");
   }
   return true;

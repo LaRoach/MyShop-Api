@@ -1,9 +1,10 @@
 "use strict";
+const { v4: uuidv4 } = require("uuid");
 const { errors } = require("@strapi/utils");
 const { ForbiddenError, ValidationError } = errors;
 
 /**
- * `current-user` middleware
+ * `create-purchase-request` middleware
  */
 
 module.exports = (config, { strapi }) => {
@@ -14,14 +15,14 @@ module.exports = (config, { strapi }) => {
     if (!ctx.request.body || !ctx.request.body.data) {
       throw new ValidationError("Request body is empty.");
     }
-
-    const parsedData = JSON.parse(ctx.request.body.data);
+    const originalData = ctx.request.body.data;
     const newData = {
-      ...parsedData,
-      user: ctx.state.user.id,
+      ...originalData,
+      user:  ctx.state.user.id,
+      purchaseid: `MYSHOP-${uuidv4().substring(0, 7)}`,
+      status: "Placed",
     };
-    const updatedJSONData = JSON.stringify(newData);
-    ctx.request.body.data = updatedJSONData;
+    ctx.request.body.data = newData;
     await next();
   };
 };

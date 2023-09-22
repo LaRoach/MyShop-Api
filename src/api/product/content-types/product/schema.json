@@ -67,22 +67,23 @@
       "required": true,
       "default": "0"
     },
-    "carts": {
+    "user": {
       "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::cart.cart",
-      "mappedBy": "products"
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "products"
     },
-    "purchases": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::purchase.purchase",
-      "mappedBy": "products"
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true,
+      "minLength": 3
     },
-    "users_permissions_user": {
+    "reviews": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "plugin::users-permissions.user"
+      "relation": "oneToMany",
+      "target": "api::review.review",
+      "mappedBy": "product"
     }
   }
 }

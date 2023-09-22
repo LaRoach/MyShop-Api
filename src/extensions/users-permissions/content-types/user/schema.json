@@ -68,12 +68,26 @@
     "cart": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::cart.cart"
+      "target": "api::cart.cart",
+      "inversedBy": "user"
     },
     "purchases": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::purchase.purchase"
+      "target": "api::purchase.purchase",
+      "mappedBy": "user"
+    },
+    "products": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::product.product",
+      "mappedBy": "user"
+    },
+    "reviews": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::review.review",
+      "mappedBy": "user"
     }
   }
 }

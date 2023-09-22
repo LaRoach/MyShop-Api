@@ -19,10 +19,14 @@
       "minLength": 4
     },
     "products": {
+      "type": "json",
+      "required": true
+    },
+    "user": {
       "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::product.product",
-      "inversedBy": "carts"
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "cart"
     }
   }
 }
